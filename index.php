@@ -14,10 +14,23 @@
                 $Nom = $_POST['Nom'];
                 $Prenom = $_POST['Prenom'];
                 $Email = $_POST['Email'];
-                $mdp = $_POST['Mot de passe'];
+                $mdp = $_POST['Mot_de_passe'];
                 $ID_role = $_POST['ID_role'];
 
-                echo "$Nom    $Prenom  $Email $mdp   $ID_role";
+                if(!empty($Nom) && !empty($Prenom) && !empty($Email) && !empty($mdp) && !empty($ID_role)){
+                    require_once 'include/database.php';
+                    $sqlState = $pdo -> prepare('INSERT INTO utilisateurs VALUES(null, ?,?,?,?,?)');
+                    $sqlState -> execute([$Nom,$Prenom, $Email,$mdp, $ID_role]);
+
+                    header('location: connexion.php');
+                }
+                else { 
+                    ?>
+                    <div class="alert alert-danger" role="alert">
+                        Tous les champs sont obligatoires!
+                    </div>
+                    <?php
+                }
             }
 
         ?>
