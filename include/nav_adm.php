@@ -7,13 +7,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Accueil</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">profile</a>
+          <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Rapports</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Utilisateurs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Filières</a>
         </li>
       </ul>
       <form class="d-flex" role="search">

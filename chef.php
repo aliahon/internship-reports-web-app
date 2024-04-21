@@ -8,6 +8,7 @@
 </head>
 <body data-bs-theme="dark">
     <?php include 'include/nav.php'?>
+    <?php include 'securité.php' ?>
     Bonjour Chef!
 </body>
 </html>
