@@ -9,6 +9,13 @@
 <body data-bs-theme="dark">
     <?php include 'include/nav.php'?>
     <?php include 'include/securité.php' ?>
+    <?php 
+        require_once 'include/database.php';
+        $idRole = $_SESSION['utilisateur']['ID_role'];
+        $sqlRole = $pdo -> prepare('SELECT Nom_role FROM roles WHERE  ID_role = ? ');
+        $sqlRole -> execute([$idRole]);
+        $Role = $sqlRole -> fetch();
+    ?>
     <section  data-bs-theme="dark">
         <div class="container py-5">
             <div class="row">
@@ -18,7 +25,7 @@
                         <img src="https://i.pinimg.com/236x/ad/73/1c/ad731cd0da0641bb16090f25778ef0fd.jpg" alt="avatar"
                         class="rounded-circle img-fluid" style="width: 150px;">
                         <h5 class="my-3">N.E</h5>
-                        <p class="text-muted mb-1">Etudiant</p>
+                        <p class="text-muted mb-1"><?php echo $Role['Nom_role']; ?></p>
                         <div class="d-flex justify-content-center mb-2">
                             <form method="post" action="deconnexion.php">
                                 <input type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary" value="Se déconnecter" name='deconnecter' onclick="return confirm('Voulez-vous vraiment vous déconnecter ?');">
@@ -35,7 +42,7 @@
                         <p class="mb-0">Le nom complet</p>
                     </div>
                     <div class="col-sm-9">
-                        <p class="text-muted mb-0">EL IDRISSI Nohaila<?php //l'extraction de nom et prenom sera faite ici ?></p>
+                        <p class="text-muted mb-0"><?php echo strtoupper($_SESSION['utilisateur']['Nom'] ). " " . ucwords($_SESSION['utilisateur']['Prenom']); ?></p>
                     </div>
                     </div>
                     <hr>
@@ -44,27 +51,34 @@
                         <p class="mb-0">Email</p>
                     </div>
                     <div class="col-sm-9">
-                        <p class="text-muted mb-0">nohaila09el@gmail.com<?php //l'extraction de email sera faite ici ?></p>
+                        <p class="text-muted mb-0"><?php echo $_SESSION['utilisateur']['Email']?></p>
                     </div>
                     </div>
                     <hr>
                     <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0">Filière</p>
+                        <div class="col-sm-3">
+                            <p class="mb-0">Filière</p>
+                        </div>
+                        <div class="col-sm-9">
+                            <p class="text-muted mb-0"><?php //l'extraction de Filière sera faite ici ?></p>
+                        </div>
                     </div>
-                    <div class="col-sm-9">
-                        <p class="text-muted mb-0">Génie informatique<?php //l'extraction de Filière sera faite ici ?></p>
-                    </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                    <div class="col-sm-3">
-                        <p class="mb-0">Niveau</p>
-                    </div>
-                    <div class="col-sm-9">
-                        <p class="text-muted mb-0"> 1ére anneé cycle d'ingénieur<?php //l'extraction de Niveau sera faite ici ?></p>
-                    </div>
-                    </div>
+                    <?php 
+                    if($_SESSION['utilisateur']['ID_role'] == 4){
+                        ?>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Niveau</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0"> 1ére anneé cycle d'ingénieur<?php //l'extraction de Niveau sera faite ici ?></p>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    ?>
+
                 </div>
                 </div>
             </div>

@@ -22,7 +22,25 @@
                     $sqlState = $pdo -> prepare('INSERT INTO utilisateurs VALUES(null, ?,?,?,?,?)');
                     $sqlState -> execute([$Nom,$Prenom, $Email,$mdp, $ID_role]);
 
-                    header('location: connexion.php');
+
+                    //ajouter aux autre tableaux selon le role d'utilisateur
+                    $role = $utilisateur['ID_role'];
+                    switch ($role){
+                        case 2 : 
+                            $sqlState = $pdo -> prepare('INSERT INTO etudiant VALUES(null, ?,?,?,?,?)');
+                            $sqlState -> execute([$Nom,$Prenom, $Email,$mdp, $ID_role]);
+                            break;
+
+                        case 3 : 
+                            $sqlState = $pdo -> prepare('INSERT INTO utilisateurs VALUES(null, ?,?,?,?,?)');
+                            $sqlState -> execute([$Nom,$Prenom, $Email,$mdp, $ID_role]);
+                            break;
+                            
+                        case 4 : 
+                            $sqlState = $pdo -> prepare('INSERT INTO utilisateurs VALUES(null, ?,?,?,?,?)');
+                            $sqlState -> execute([$Nom,$Prenom, $Email,$mdp, $ID_role]);
+                            break;
+                    }
                 }
                 else { 
                     ?>
@@ -76,6 +94,41 @@
                 Please select a valid Role.
                 </div>
             </div>
+
+            <?php
+
+                $role = $utilisateur['ID_role'];
+                switch ($role){
+                    case 2 : 
+                        ?>
+                            <div class="col-md-3 ">
+                                <label for="validationCustom05" class="form-label">Filière</label>
+                                <select class="form-select" id="validationCustom05" name="ID_role" required>
+                                <option value="1">Admin</option>
+                                <option value="2">Chef de département</option>
+                                <option value="3">Secretaire de département</option>
+                                <option value="4">Etudiant</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                Please select a valid Role.
+                                </div>
+                            </div>
+                        <?php
+                        break;
+
+                    case 3 : 
+                        $sqlState = $pdo -> prepare('INSERT INTO utilisateurs VALUES(null, ?,?,?,?,?)');
+                        $sqlState -> execute([$Nom,$Prenom, $Email,$mdp, $ID_role]);
+                        break;
+                        
+                    case 4 : 
+                        $sqlState = $pdo -> prepare('INSERT INTO utilisateurs VALUES(null, ?,?,?,?,?)');
+                        $sqlState -> execute([$Nom,$Prenom, $Email,$mdp, $ID_role]);
+                        break;
+                }
+
+            ?>
+
             <div class="col-12">
                 <button class="btn btn-primary" type="submit" name="Ajouter">Ajouter Utilisateur</button>
             </div>
