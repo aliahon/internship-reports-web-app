@@ -1,3 +1,12 @@
+<?php
+session_start();
+$admin = false;
+$role = $_SESSION['utilisateur']['ID_role'];
+if($role == 1){
+  $admin = true;
+}
+?>
+
 <nav class="navbar  navbar-expand-lg  bg-primary" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">RStageENSAA</a>
@@ -6,14 +15,32 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <?php
+          if($admin){
+            ?>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="admin.php">Dashboard</a>
+              </li>
+            <?php
+          }
+        ?>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+          <a class="nav-link" href="rapport.php">Rapports</a>
         </li>
+        <?php
+          if($admin){
+            ?>
+              <li class="nav-item">
+                <a class="nav-link" href="utilisateur.php">Utilisateurs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="filiere.php">Filières</a>
+              </li>
+            <?php
+          }
+          ?>
         <li class="nav-item">
-          <a class="nav-link" href="#">profile</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Rapports</a>
+          <a class="nav-link" href="profile.php">Profile</a>
         </li>
       </ul>
       <form class="d-flex" role="search">

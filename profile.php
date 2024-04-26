@@ -8,20 +8,23 @@
 </head>
 <body data-bs-theme="dark">
     <?php include 'include/nav.php'?>
+    <?php include 'include/securité.php' ?>
     <section  data-bs-theme="dark">
         <div class="container py-5">
             <div class="row">
             <div class="col-lg-4">
                 <div class="card mb-4">
-                <div class="card-body text-center">
-                    <img src="https://i.pinimg.com/236x/ad/73/1c/ad731cd0da0641bb16090f25778ef0fd.jpg" alt="avatar"
-                    class="rounded-circle img-fluid" style="width: 150px;">
-                    <h5 class="my-3">N.E</h5>
-                    <p class="text-muted mb-1">Etudiant</p>
-                    <div class="d-flex justify-content-center mb-2">
-                    <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Déconnecter</button>
+                    <div class="card-body text-center">
+                        <img src="https://i.pinimg.com/236x/ad/73/1c/ad731cd0da0641bb16090f25778ef0fd.jpg" alt="avatar"
+                        class="rounded-circle img-fluid" style="width: 150px;">
+                        <h5 class="my-3">N.E</h5>
+                        <p class="text-muted mb-1">Etudiant</p>
+                        <div class="d-flex justify-content-center mb-2">
+                            <form method="post" action="deconnexion.php">
+                                <input type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary" value="Se déconnecter" name='deconnecter' onclick="return confirm('Voulez-vous vraiment vous déconnecter ?');">
+                            </form>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
             <div class="col-lg-8">
