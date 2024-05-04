@@ -22,7 +22,7 @@
                 if(!empty($Nom) && !empty($Prenom) && !empty($Email) && !empty($mdp) && !empty($ID_role)){
                     require_once 'include/database.php';
                     $sqlState = $pdo -> prepare('INSERT INTO utilisateurs VALUES(null, ?,?,?,?,?)');
-                    $sqlState -> execute([$Nom,$Prenom, $Email,$mdp, $ID_role]);
+                    $ajout = $sqlState -> execute([$Nom,$Prenom, $Email,$mdp, $ID_role]);
 
 
                     //ajouter aux autre tableaux selon le role d'utilisateur
