@@ -1,5 +1,4 @@
 <?php
-var_dump($_GET);
 require_once 'include/database.php';
 $id = $_GET['ID_filiere_'];
 $sqlStat = $pdo -> prepare('DELETE FROM filieres WHERE ID_filiere = ?');

@@ -44,16 +44,9 @@
                             case 1 : 
                                 header('location: admin.php');
                                 break;
-                            case 2 : 
-                                header('location: chef.php');
-                                break;
-
-                            case 3 : 
-                                header('location: secretaire.php');
-                                break;
                                 
-                            case 4 : 
-                                header('location: etudiant.php');
+                            default : 
+                                header('location: rapport.php');
                                 break;
                         }
                         

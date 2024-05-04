@@ -9,7 +9,7 @@
 </head>
 <body data-bs-theme="dark">
     <?php include 'include/nav.php'?>
-    <div class="container" style=" padding : 5% 5%" >
+    <div class="container" style=" padding : 5% 0%" >
         <form>
             <div class="col-12">
                 <button type="button" class="btn btn-primary btn-lg"><a href="AjouterFiliere.php"><i class="fa-solid fa-plus"></i></a></button>

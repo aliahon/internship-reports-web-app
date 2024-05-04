@@ -24,7 +24,7 @@
                     <div class="card-body text-center">
                         <img src="https://i.pinimg.com/236x/ad/73/1c/ad731cd0da0641bb16090f25778ef0fd.jpg" alt="avatar"
                         class="rounded-circle img-fluid" style="width: 150px;">
-                        <h5 class="my-3">N.E</h5>
+                        <h5 class="my-3"><?php echo strtoupper(substr($_SESSION['utilisateur']['Prenom'], 0, 1)) . "." . strtoupper(substr($_SESSION['utilisateur']['Nom'] , 0, 1)); ?></h5>
                         <p class="text-muted mb-1"><?php echo $Role['Nom_role']; ?></p>
                         <div class="d-flex justify-content-center mb-2">
                             <form method="post" action="deconnexion.php">
@@ -51,18 +51,24 @@
                         <p class="mb-0">Email</p>
                     </div>
                     <div class="col-sm-9">
-                        <p class="text-muted mb-0"><?php echo $_SESSION['utilisateur']['Email']?></p>
+                        <p class="text-muted mb-0"><?php echo $_SESSION['utilisateur']['Email'];?></p>
                     </div>
                     </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <p class="mb-0">Filière</p>
+                    <?php 
+                    if($_SESSION['utilisateur']['ID_role'] != 1){
+                        ?>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Filière</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0"><?php //l'extraction de Filière sera faite ici ?></p>
+                            </div>
                         </div>
-                        <div class="col-sm-9">
-                            <p class="text-muted mb-0"><?php //l'extraction de Filière sera faite ici ?></p>
-                        </div>
-                    </div>
+                        <?php
+                    }
+                    ?>
                     <?php 
                     if($_SESSION['utilisateur']['ID_role'] == 4){
                         ?>
