@@ -63,7 +63,23 @@
                                 <p class="mb-0">Filière</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0"><?php //l'extraction de Filière sera faite ici ?></p>
+                                <p class="text-muted mb-0">
+                                    <?php 
+                                        $table = array(
+                                            2 => 'chefs_departement',
+                                            3 => 'secretaires_departement',
+                                            4 => 'etudiant'
+                                        );
+                                        $id = $_SESSION['utilisateur']['ID_utilisateur'];
+                                        $tableName = $table[$_SESSION['utilisateur']['ID_role']];
+                                        $filiere = $pdo->query("SELECT F.Nom_filiere
+                                                                FROM utilisateurs U
+                                                                JOIN $tableName T ON U.ID_utilisateur = T.ID_utilisateur
+                                                                JOIN filieres F ON T.ID_filiere = F.ID_filiere
+                                                                WHERE U.ID_utilisateur= $id;")->fetch();
+                                        echo $filiere['Nom_filiere'];
+                                    ?>
+                                </p>
                             </div>
                         </div>
                         <?php
@@ -78,7 +94,18 @@
                                 <p class="mb-0">Niveau</p>
                             </div>
                             <div class="col-sm-9">
-                                <p class="text-muted mb-0"> 1ére anneé cycle d'ingénieur<?php //l'extraction de Niveau sera faite ici ?></p>
+                                <p class="text-muted mb-0">
+                                    <?php 
+                                        $id = $_SESSION['utilisateur']['ID_utilisateur'];
+                                        $niveau = $pdo->query("SELECT N.Nom_niveau
+                                                                FROM utilisateurs U
+                                                                JOIN etudiant E ON U.ID_utilisateur = E.ID_utilisateur
+                                                                JOIN filieres F ON E.ID_filiere = F.ID_filiere
+                                                                JOIN niveaux N ON E.ID_niveau = N.ID_niveau
+                                                                WHERE U.ID_utilisateur=$id;")->fetch();
+                                        echo $niveau['Nom_niveau'];
+                                    ?>
+                                </p>
                             </div>
                         </div>
                         <?php
