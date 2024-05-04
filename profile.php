@@ -16,7 +16,7 @@
         $sqlRole -> execute([$idRole]);
         $Role = $sqlRole -> fetch();
     ?>
-    <section  data-bs-theme="dark">
+    <section  data-bs-theme="dark" >
         <div class="container py-5">
             <div class="row">
             <div class="col-lg-4">

@@ -7,13 +7,13 @@ if($role == 1){
 }
 ?>
 
-<nav class="navbar  navbar-expand-lg  bg-primary" data-bs-theme="dark">
-  <div class="container-fluid">
+<nav class="navbar  navbar-expand-lg  bg-primary sticky-top" data-bs-theme="dark" style="z-index:1;">
+  <div class="container-fluid justify-content-center">
     <a class="navbar-brand" href="#">RStageENSAA</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <?php
           if($admin){
@@ -43,10 +43,10 @@ if($role == 1){
           <a class="nav-link" href="profile.php">Profile</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
+      <!--<form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-light" type="submit">Search</button>
-      </form>
+      </form>-->
     </div>
   </div>
 </nav>
