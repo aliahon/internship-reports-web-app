@@ -73,7 +73,7 @@
             </div>
         </div>
 
-    </div> 4
+    </div> 
     
     <script>
         $(document).ready(function(){
