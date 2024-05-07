@@ -6,8 +6,8 @@ $idNiveau = $_GET['idNiveau'];
 $niveau = $_GET['niveau'];
 ?> 
 <div class="col-md-3 ">
-    <label for="validationCustom06" class="form-label">Filière</label>
-    <select class="form-select" id="validationCustom06" name="ID_filiere" required>
+    <label for="validationCustom11" class="form-label">Filière</label>
+    <select class="form-select" id="validationCustom11" name="ID_filiere" required>
         <option value="<?php echo $idFiliere ;?>" selected><?php echo $filiere ;?></option>
         <?php
             $filieres = $pdo -> query('SELECT * FROM filieres')->fetchAll(PDO::FETCH_ASSOC);
@@ -21,8 +21,8 @@ $niveau = $_GET['niveau'];
     </div>
 </div>
 <div class="col-md-3 ">
-    <label for="validationCustom07" class="form-label">Niveau</label>
-    <select class="form-select" id="validationCustom07" name="ID_niveau" required>
+    <label for="validationCustom12" class="form-label">Niveau</label>
+    <select class="form-select" id="validationCustom12" name="ID_niveau" required>
         <option value="<?php echo $idNiveau ;?>" selected><?php echo $niveau ;?></option>
         <option value="1">1ére année cycle d'ingénieur</option>
         <option value="2">2éme année cycle d'ingénieur</option>

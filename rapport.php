@@ -62,9 +62,17 @@
 <body data-bs-theme="dark">
     <?php include 'include/nav.php'?>
     <?php include 'include/securité.php' ?>
+    <?php 
+        require_once 'include/database.php';
+        $idRole = $_SESSION['utilisateur']['ID_role'];
+        $sqlRole = $pdo -> prepare('SELECT Nom_role FROM roles WHERE  ID_role = ? ');
+        $sqlRole -> execute([$idRole]);
+        $Role = $sqlRole -> fetch();
+    ?>
         <div id="mySidenav" class="sidenav" style="position: absolute; z-index:2;">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <li class="dropdown">
+                <?php if($_SESSION['utilisateur']['ID_role'] == 1 || $_SESSION['utilisateur']['ID_role'] == 4 ){ ?>
                 <a class="dropdown-toggle" onclick="toggleDropdown()">
                     Filières
                 </a>
@@ -80,6 +88,9 @@
                     ?>
                 </ul>
             </li>
+            <?php
+                }
+            ?>
         </div>
     <div class="container" style=" padding : 5% 0%" >
         <div class="row align-items-center">
@@ -95,15 +106,18 @@
                 </form>
             </div>
         </div>
+        <div class="container row align-items-center">
+
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Bmn0bEVxk2rRZyB8OHOTcG2OpnnVceKxF7GTlPRKlg/KRQdDUa9HVnWHM2dkcd9p" crossorigin="anonymous"></script>
     <script>
         function openNav() {
             var dropdownMenu = document.getElementById("filieres");
             dropdownMenu.style.display = "block";
-            var dropdownWidth = dropdownMenu.offsetWidth; // Get the width of the dropdown menu
-            var padding = 20; // Adjust the padding value as needed
-            var desiredWidth = dropdownWidth + padding; // Add padding to the width
+            var dropdownWidth = dropdownMenu.offsetWidth;
+            var padding = 20; 
+            var desiredWidth = dropdownWidth + padding; 
 
             document.getElementById("mySidenav").style.width = desiredWidth + "px";
         }
