@@ -13,6 +13,9 @@
             font-family: "Lato", sans-serif;
         }
 
+        #filieres{
+            background-color: #001432;
+        }
         .sidenav {
             height: 100%;
             width: 0;
@@ -33,6 +36,9 @@
             color: #818181;
             display: block;
             transition: 0.3s;
+        }
+        li{
+            list-style-type: none;
         }
 
         .sidenav a:hover {
@@ -58,10 +64,22 @@
     <?php include 'include/securité.php' ?>
         <div id="mySidenav" class="sidenav" style="position: absolute; z-index:2;">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="#">About</a>
-            <a href="#">Services</a>
-            <a href="#">Clients</a>
-            <a href="#">Contact</a>
+            <li class="dropdown">
+                <a class="dropdown-toggle" onclick="toggleDropdown()">
+                    Filières
+                </a>
+                <ul class="dropdown-menu" id="filieres">
+                    <?php
+                        require_once 'include/database.php';
+                        $filieres = $pdo -> query('SELECT * FROM filieres')->fetchAll(PDO::FETCH_ASSOC);
+                        foreach($filieres as $filiere){
+                    ?>
+                    <li><a class="dropdown-item" href="#"><?php echo $filiere['Nom_filiere']?></a></li>
+                    <?php
+                        }
+                    ?>
+                </ul>
+            </li>
         </div>
     <div class="container" style=" padding : 5% 0%" >
         <div class="row align-items-center">
@@ -78,13 +96,29 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Bmn0bEVxk2rRZyB8OHOTcG2OpnnVceKxF7GTlPRKlg/KRQdDUa9HVnWHM2dkcd9p" crossorigin="anonymous"></script>
     <script>
         function openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
+            var dropdownMenu = document.getElementById("filieres");
+            dropdownMenu.style.display = "block";
+            var dropdownWidth = dropdownMenu.offsetWidth; // Get the width of the dropdown menu
+            var padding = 20; // Adjust the padding value as needed
+            var desiredWidth = dropdownWidth + padding; // Add padding to the width
+
+            document.getElementById("mySidenav").style.width = desiredWidth + "px";
         }
 
         function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
+        }
+
+        function toggleDropdown() {
+            var dropdownMenu = document.getElementById("filieres");
+            if (dropdownMenu.style.display === "block") {
+                dropdownMenu.style.display = "none";
+            } else {
+                dropdownMenu.style.display = "block";
+            }
         }
     </script>
 
