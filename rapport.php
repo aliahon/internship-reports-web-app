@@ -128,7 +128,7 @@
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $rapport['Titre_rapport']?></h5>
                         <p class="card-text"><?php echo $rapport['Description_rapport']?></p>
-                        <a href="<?php echo $rapport['Chemin_fichier']?>" class="btn btn-primary col-md-3"><i class="fa-solid fa-download"></i></a>
+                        <a href="download.php?filename=<?php echo $rapport['Chemin_fichier']?>" class="btn btn-primary col-md-3"><i class="fa-solid fa-download"></i></a>
                         <?php 
                         if($idRole == 1 || $idRole == 2 ){
                         ?>

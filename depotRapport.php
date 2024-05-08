@@ -12,6 +12,13 @@
 <body data-bs-theme="dark">
 <?php include 'include/nav.php'?>
     <?php include 'include/securité.php' ?>
+        <?php 
+        require_once 'include/database.php';
+        $idRole = $_SESSION['utilisateur']['ID_role'];
+        $sqlRole = $pdo -> prepare('SELECT Nom_role FROM roles WHERE  ID_role = ? ');
+        $sqlRole -> execute([$idRole]);
+        $Role = $sqlRole -> fetch();
+    ?>
 
     <div class="container" style=" padding : 2% 0%" >
     <?php
