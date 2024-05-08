@@ -72,7 +72,7 @@
         <div id="mySidenav" class="sidenav" style="position: absolute; z-index:2;">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <li class="dropdown">
-                <?php if($_SESSION['utilisateur']['ID_role'] == 1 || $_SESSION['utilisateur']['ID_role'] == 4 ){ ?>
+                <?php if($idRole == 1 || $idRole == 4 ){ ?>
                 <a class="dropdown-toggle" onclick="toggleDropdown()">
                     Filières
                 </a>
@@ -106,8 +106,46 @@
                 </form>
             </div>
         </div>
-        <div class="container row align-items-center">
+        <div class="row row-cols-1 row-cols-md-3 g-4" style=" padding : 5% 0%" >
+            <?php 
+                if($idRole == 1 || $idRole == 2 ){
+                    ?>
+                        <div class="col ">
+                            <button type="button" class="d-flex justify-content-center align-items-center card h-100 col-md-12 btn btn-primary btn-lg"><a href="depotRapport.php"><i class="fa-solid fa-file-circle-plus" style="font-size:150px;"></i></a></button>
+                        </div>                    
+                    <?php
+                }
 
+                    $rapports = $pdo -> query('SELECT * FROM rapports_stage')->fetchAll(PDO::FETCH_ASSOC);
+                    foreach($rapports as $rapport){
+                ?>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-header">
+                        Filière
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $rapport['Titre_rapport']?></h5>
+                        <p class="card-text"><?php echo $rapport['Description_rapport']?></p>
+                        <a href="<?php echo $rapport['Chemin_fichier']?>" class="btn btn-primary col-md-3"><i class="fa-solid fa-download"></i></a>
+                        <?php 
+                        if($idRole == 1 || $idRole == 2 ){
+                        ?>
+                        <a href="ModRapport.php?id=<?php echo $rapport['ID_rapport']?>" style="margin-left:10%;" class="btn btn-success col-md-3"><i class="fa-solid fa-file-pen"></i></a >
+                        <a href="SupRapport.php?id=<?php echo $rapport['ID_rapport']?>" style="margin-left:10px;" class="btn btn-danger col-md-3" onclick="return confirm('Voulez-vous vraiment SUPPRIMER ce rapport?');"><i class="fa-solid fa-delete-left"></i></a >
+                        <?php
+                            }
+                        ?>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">Déposer le: <?php echo $rapport['Date_depot']?></small>
+                    </div>
+                </div>
+            </div>
+            <?php
+                }
+            ?>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Bmn0bEVxk2rRZyB8OHOTcG2OpnnVceKxF7GTlPRKlg/KRQdDUa9HVnWHM2dkcd9p" crossorigin="anonymous"></script>

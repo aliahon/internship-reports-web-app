@@ -22,13 +22,11 @@
         $titre = $_POST['titre'];
         $description = $_POST['description'];
         $fichier = $_FILES['fichier'];
-        // Récupérer les ID des étudiants sélectionnés
-        // $etudiants = $_POST['etudiants']; // À décommenter si vous ajoutez la sélection des étudiants
-
+    
         // Gérer le fichier uploadé
         $uploadDir = 'uploads/'; // Répertoire de stockage des fichiers
         $uploadFile = $uploadDir . basename($fichier['name']); // Chemin complet du fichier uploadé
-        var_dump($fichier );
+
         // Déplacer le fichier téléchargé vers le répertoire de destination
         if (move_uploaded_file($fichier['tmp_name'], $uploadFile)) {
             // Insertion des données dans la table rapports_stage

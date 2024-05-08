@@ -105,7 +105,7 @@
                     <table class="table table-bordered myTable" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID_utilisateur</th>
+                                <th>ID_chef_departement</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -116,7 +116,7 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>ID_utilisateur</th>
+                                <th>ID_chef_departement</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -127,7 +127,7 @@
                         </tfoot>
                         <tbody>
                             <?php
-                            $chefs = $pdo -> query('SELECT U.ID_utilisateur,U.Nom, U.Prenom, U.Email, U.Mdp, F.Nom_filiere
+                            $chefs = $pdo -> query('SELECT U.ID_utilisateur,  CD.ID_chef_departement,U.Nom, U.Prenom, U.Email, U.Mdp, F.Nom_filiere
                                                      FROM utilisateurs U
                                                      JOIN chefs_departement CD ON U.ID_utilisateur = CD.ID_utilisateur
                                                      JOIN filieres F ON CD.ID_filiere = F.ID_filiere;')->fetchAll(PDO::FETCH_ASSOC);
@@ -135,7 +135,7 @@
                             foreach($chefs  as $chef){
                                 ?>
                                     <tr>
-                                        <td><?php echo $chef['ID_utilisateur']?></td>
+                                        <td><?php echo $chef['ID_chef_departement']?></td>
                                         <td><?php echo $chef['Nom']?></td>
                                         <td><?php echo $chef['Prenom']?></td>
                                         <td><?php echo $chef['Email']?></td>
@@ -165,7 +165,7 @@
                     <table class="table table-bordered myTable" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID_utilisateur</th>
+                                <th>ID_secretaire_departement</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -176,7 +176,7 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>ID_utilisateur</th>
+                                <th>ID_secretaire_departement</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -187,7 +187,7 @@
                         </tfoot>
                         <tbody>
                         <?php
-                        $secretaires = $pdo -> query('SELECT U.ID_utilisateur,U.Nom, U.Prenom, U.Email, U.Mdp, F.Nom_filiere
+                        $secretaires = $pdo -> query('SELECT U.ID_utilisateur, SD.ID_secretaire_departement,U.Nom, U.Prenom, U.Email, U.Mdp, F.Nom_filiere
                                                      FROM utilisateurs U
                                                      JOIN secretaires_departement SD ON U.ID_utilisateur = SD.ID_utilisateur
                                                      JOIN filieres F ON SD.ID_filiere = F.ID_filiere;')->fetchAll(PDO::FETCH_ASSOC);
@@ -195,7 +195,7 @@
                             foreach($secretaires  as $secretaire){
                                 ?>
                                     <tr>
-                                        <td><?php echo $secretaire['ID_utilisateur']?></td>
+                                        <td><?php echo $secretaire['ID_secretaire_departement']?></td>
                                         <td><?php echo $secretaire['Nom']?></td>
                                         <td><?php echo $secretaire['Prenom']?></td>
                                         <td><?php echo $secretaire['Email']?></td>
@@ -225,7 +225,7 @@
                     <table class="table table-bordered myTable" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID_utilisateur</th>
+                                <th>ID_etudiant</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -237,7 +237,7 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>ID_utilisateur</th>
+                                <th>ID_etudiant</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -249,7 +249,7 @@
                         </tfoot>
                         <tbody>
                             <?php
-                            $etudiants = $pdo -> query('SELECT U.ID_utilisateur, U.Nom, U.Prenom, U.Email ,U.Mdp, F.Nom_filiere, N.Nom_niveau
+                            $etudiants = $pdo -> query('SELECT U.ID_utilisateur, E.ID_etudiant, U.Nom, U.Prenom, U.Email ,U.Mdp, F.Nom_filiere, N.Nom_niveau
                                                     FROM utilisateurs U
                                                     JOIN etudiant E ON U.ID_utilisateur = E.ID_utilisateur
                                                     JOIN filieres F ON E.ID_filiere = F.ID_filiere
@@ -258,7 +258,7 @@
                             foreach($etudiants as $etudiant){
                                 ?>
                                     <tr>
-                                        <td><?php echo $etudiant['ID_utilisateur']?></td>
+                                        <td><?php echo $etudiant['ID_etudiant']?></td>
                                         <td><?php echo $etudiant['Nom']?></td>
                                         <td><?php echo $etudiant['Prenom']?></td>
                                         <td><?php echo $etudiant['Email']?></td>
