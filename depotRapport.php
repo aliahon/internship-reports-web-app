@@ -60,7 +60,15 @@
         }
     }
     ?>
-        <h1>Dépôt de Rapport</h1>
+
+        <div style="display: flex; justify-content: space-between;">
+            <h4>Dépôt de Rapport</h4>
+            <form >
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary btn-lg"><a href="rapport.php"><i class="fa-solid fa-arrow-right"></i></a></button>
+                </div>
+            </form>
+        </div>
         <form action="depotRapport.php" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="titre" class="form-label">Titre du rapport</label>

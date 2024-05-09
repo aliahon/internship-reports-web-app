@@ -69,29 +69,6 @@
         $sqlRole -> execute([$idRole]);
         $Role = $sqlRole -> fetch();
     ?>
-        <div id="mySidenav" class="sidenav" style="position: absolute; z-index:2;">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <li class="dropdown">
-                <?php if($idRole == 1 || $idRole == 4 ){ ?>
-                <a class="dropdown-toggle" onclick="toggleDropdown()">
-                    Filières
-                </a>
-                <ul class="dropdown-menu" id="filieres">
-                    <?php
-                        require_once 'include/database.php';
-                        $filieres = $pdo -> query('SELECT * FROM filieres')->fetchAll(PDO::FETCH_ASSOC);
-                        foreach($filieres as $filiere){
-                    ?>
-                    <li><a class="dropdown-item" href="#"><?php echo $filiere['Nom_filiere']?></a></li>
-                    <?php
-                        }
-                    ?>
-                </ul>
-            </li>
-            <?php
-                }
-            ?>
-        </div>
     <div class="container" style=" padding : 5% 0%" >
         <div class="row align-items-center">
             <div class="col-md-6">
@@ -115,8 +92,29 @@
                         </div>                    
                     <?php
                 }
-
+                if($idRole == 1 || $idRole == 4 ){
                     $rapports = $pdo -> query('SELECT * FROM rapports_stage')->fetchAll(PDO::FETCH_ASSOC);
+                }
+                else{
+                    $table = array(
+                        2 => 'chefs_departement',
+                        3 => 'secretaires_departement',
+                    );
+                    $id = $_SESSION['utilisateur']['ID_utilisateur'];
+                    $tableName = $table[$idRole ];
+                    $filiere = $pdo->query("SELECT F.ID_filiere, F.Nom_filiere
+                                              FROM utilisateurs U
+                                              JOIN $tableName T ON U.ID_utilisateur = T.ID_utilisateur
+                                              JOIN filieres F ON T.ID_filiere = F.ID_filiere
+                                              WHERE U.ID_utilisateur= $id;")->fetch();
+                    $idFiliere=$filiere['ID_filiere'];
+                    $rapports = $pdo -> query(" SELECT RS.ID_rapport, RS.Titre_rapport, RS.Description_rapport, RS.Date_depot, RS.Chemin_fichier
+                                                FROM rapports_stage RS
+                                                JOIN rapports_etudiants RE ON RS.ID_rapport = RE.ID_rapport
+                                                JOIN etudiant E ON RE.ID_etudiant = E.ID_etudiant
+                                                JOIN filieres F ON F.ID_filiere = E.ID_filiere
+                                                WHERE E.ID_filiere=$idFiliere")->fetchAll(PDO::FETCH_ASSOC);
+                }
                     foreach($rapports as $rapport){
                 ?>
 
@@ -135,6 +133,7 @@
                 ?>
                 <div class="card h-100">
                     <div class="card-header ">
+                        <!--supposons qu'ils sont de la même filière-->
                         <?php echo $etudiants[0]['Nom_filiere']?>
                     </div>
                     <div class="card-body">
@@ -142,11 +141,12 @@
                         <p class="card-text"><?php echo $rapport['Description_rapport']?></p>
 
                     </div>
-                    <h6 class="m-0 font-weight-bold text-primary" style="padding: 10px;">Réaliser par:</h6>
-                    <?php 
+                    <?php if($idRole!=4){ ?>
+                        <h6 class="m-0 font-weight-bold text-primary" style="padding: 10px;">Réaliser par:</h6>
+                        <?php    
                         foreach($etudiants as $etudiant){
-                            if($idRole!=4){
                                 ?>
+                                
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="toggleCollapse(this)"><?php echo strtoupper($etudiant['Nom'] ). " " . ucwords($etudiant['Prenom']); ?></li>
                                         <div class="collapse collapseExample">
@@ -159,20 +159,22 @@
                                         </div>
                                     </ul>
       
-                                <?php
+                                    <?php
                             }
                         }
-                        if($idRole == 1 || $idRole == 2 ){
                         ?>
                     <div style="padding: 10px;">
                         <a href="download.php?filename=<?php echo $rapport['Chemin_fichier']?>" class="btn btn-primary col-md-4"><i class="fa-solid fa-download"></i></a>
+                        <?php
+                        if($idRole == 1 || $idRole == 2 ){
+                        ?>
                         <a href="ModRapport.php?id=<?php echo $rapport['ID_rapport']?>" style="margin-left:10%;" class="btn btn-success col-md-3"><i class="fa-solid fa-file-pen"></i></a >
                         <a href="SupRapport.php?id=<?php echo $rapport['ID_rapport']?>" style="margin-left:10px;" class="btn btn-danger col-md-3" onclick="return confirm('Voulez-vous vraiment SUPPRIMER ce rapport?');"><i class="fa-solid fa-delete-left"></i></a >
-                    </div>
-
-                    <?php
+                        <?php
                         }
                     ?>
+                    </div>
+
 
                     <div class="card-footer">
                         <small class="text-body-secondary">Déposer le: <?php echo $rapport['Date_depot']?></small>
@@ -184,6 +186,32 @@
             ?>
         </div>
     </div>
+    <div id="mySidenav" class="sidenav" style="position: absolute; z-index:2;">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <li class="dropdown">
+                <?php ?>
+                <a class="dropdown-toggle" onclick="toggleDropdown()">
+                    Filières
+                </a>
+                <ul class="dropdown-menu" id="filieres">
+                    <?php
+                        if($idRole == 1 || $idRole == 4 ){ 
+                        require_once 'include/database.php';
+                        $filieres = $pdo -> query('SELECT * FROM filieres')->fetchAll(PDO::FETCH_ASSOC);
+                        foreach($filieres as $filiere){
+                    ?>
+                    <li><a class="dropdown-item" href="#" onclick="filterRapports('filiere', '<?php echo $filiere['Nom_filiere']; ?>')"><?php echo $filiere['Nom_filiere']?></a></li>
+                    <?php
+                        }}
+                        else{
+                    ?>
+                    <li><a class="dropdown-item" href="#"><?php echo $filiere['Nom_filiere']?></a></li>
+                    <?php
+                        }
+                    ?>
+                </ul>
+            </li>
+        </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Bmn0bEVxk2rRZyB8OHOTcG2OpnnVceKxF7GTlPRKlg/KRQdDUa9HVnWHM2dkcd9p" crossorigin="anonymous"></script>
 
     <script>
