@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Explorer les rapports de stage de l'ENSAA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+        <script type="text/javascript">
+            (function(){
+                emailjs.init('CZGsgydi-ioEiz8ZU') })();
+        </script>
     <style>
         .navbar {
             background-color: #343a40;
@@ -68,6 +73,7 @@
     </style>
 </head>
 <body data-bs-theme="dark">
+    
     <nav class="navbar navbar-expand-lg navbar-dark bg-body-tertiary sticky-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">StageENSAA</a>
@@ -113,7 +119,7 @@
     <div class="contact-form my-5" id="contact" style="padding:5%;">
         <div class="container">
             <h2 class="text-center">Contactez-nous</h2>
-            <form action="#" method="POST">
+            <form  method="POST">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nom</label>
                     <input type="text" class="form-control" id="name" name="name" required>
@@ -127,12 +133,34 @@
                     <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    <button type="button" class="btn btn-primary" onclick="sendMail()">Envoyer</button>
                 </div>
             </form>
         </div>
     </div>
     <div id="finisio">
     </div>
+
+    <script>
+        function sendMail() {
+            var params = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                message: document.getElementById("message").value 
+            };
+            emailjs.send("service_ogmuq9t","template_1tvjccu", params)
+                .then(function (res) {
+                    alert("Success! " + res.status);
+                    // Réinitialiser les champs du formulaire
+                    document.getElementById("name").value = "";
+                    document.getElementById("email").value = "";
+                    document.getElementById("message").value = "";
+                })
+                .catch(function (error) {
+                    alert("Error: " + error);
+                });
+        }
+    </script>
+
 </body>
 </html>
