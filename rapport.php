@@ -121,23 +121,59 @@
                 ?>
 
             <div class="col">
+                <?php
+                    $idRapport = $rapport['ID_rapport'];
+                    $etudiants = $pdo -> query("SELECT U.Nom, U.Prenom, U.Email, F.Nom_filiere, N.Nom_niveau
+                                                FROM etudiant E
+                                                JOIN filieres F ON F.ID_filiere = E.ID_filiere
+                                                JOIN niveaux N ON N.ID_niveau = E.ID_niveau
+                                                JOIN utilisateurs U ON U.ID_utilisateur = E.ID_utilisateur
+                                                JOIN rapports_etudiants RE ON RE.ID_etudiant = E.ID_etudiant
+                                                JOIN rapports_stage RS ON RS.ID_rapport = RE.ID_rapport
+                                                WHERE RE.ID_rapport=$idRapport")->fetchAll(PDO::FETCH_ASSOC); 
+
+                ?>
                 <div class="card h-100">
-                    <div class="card-header">
-                        Filière
+                    <div class="card-header ">
+                        <?php echo $etudiants[0]['Nom_filiere']?>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $rapport['Titre_rapport']?></h5>
                         <p class="card-text"><?php echo $rapport['Description_rapport']?></p>
-                        <a href="download.php?filename=<?php echo $rapport['Chemin_fichier']?>" class="btn btn-primary col-md-3"><i class="fa-solid fa-download"></i></a>
-                        <?php 
+
+                    </div>
+                    <h6 class="m-0 font-weight-bold text-primary" style="padding: 10px;">Réaliser par:</h6>
+                    <?php 
+                        foreach($etudiants as $etudiant){
+                            if($idRole!=4){
+                                ?>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="toggleCollapse(this)"><?php echo strtoupper($etudiant['Nom'] ). " " . ucwords($etudiant['Prenom']); ?></li>
+                                        <div class="collapse collapseExample">
+                                            <div class="card card-body">
+                                                <ul>
+                                                    <li>Email: <?php echo $etudiant['Email']; ?></li>
+                                                    <li>Niveau: <?php echo $etudiant['Nom_niveau']; ?></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </ul>
+      
+                                <?php
+                            }
+                        }
                         if($idRole == 1 || $idRole == 2 ){
                         ?>
+                    <div style="padding: 10px;">
+                        <a href="download.php?filename=<?php echo $rapport['Chemin_fichier']?>" class="btn btn-primary col-md-4"><i class="fa-solid fa-download"></i></a>
                         <a href="ModRapport.php?id=<?php echo $rapport['ID_rapport']?>" style="margin-left:10%;" class="btn btn-success col-md-3"><i class="fa-solid fa-file-pen"></i></a >
                         <a href="SupRapport.php?id=<?php echo $rapport['ID_rapport']?>" style="margin-left:10px;" class="btn btn-danger col-md-3" onclick="return confirm('Voulez-vous vraiment SUPPRIMER ce rapport?');"><i class="fa-solid fa-delete-left"></i></a >
-                        <?php
-                            }
-                        ?>
                     </div>
+
+                    <?php
+                        }
+                    ?>
+
                     <div class="card-footer">
                         <small class="text-body-secondary">Déposer le: <?php echo $rapport['Date_depot']?></small>
                     </div>
@@ -149,7 +185,24 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Bmn0bEVxk2rRZyB8OHOTcG2OpnnVceKxF7GTlPRKlg/KRQdDUa9HVnWHM2dkcd9p" crossorigin="anonymous"></script>
+
     <script>
+        function toggleCollapse(clickedElement) {
+            var collapseElement = clickedElement.nextElementSibling;
+            if (collapseElement.classList.contains("show")) {
+                collapseElement.classList.remove("show");
+            } else {
+                collapseElement.classList.add("show");
+            }
+        }
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $(".col").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
         function openNav() {
             var dropdownMenu = document.getElementById("filieres");
             dropdownMenu.style.display = "block";

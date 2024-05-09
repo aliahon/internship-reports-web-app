@@ -74,8 +74,7 @@
                 <label for="fichier" class="form-label">Fichier du rapport</label>
                 <input type="file" class="form-control" id="fichier" name="fichier" required>
             </div>
-            <!-- Ajoutez ici la sélection des étudiants qui ont contribué au rapport -->
-            <!-- Exemple: -->
+
             <div class="mb-3 d-grid gap-2 d-md-block">
                 <div class="row align-items-center">
                     <label for="etudiants" class="form-label col-md-4">Étudiants qui ont contribué au rapport</label>
@@ -92,7 +91,7 @@
                     <?php
                     require_once 'include/database.php';
                     // Requête pour récupérer la liste des étudiants depuis la base de données
-                    $etudiants = $pdo -> query('SELECT E.ID_etudiant, U.Nom, U.Prenom
+                    $etudiants = $pdo -> query('SELECT E.ID_etudiant, U.Nom, U.Prenom, F.Nom_filiere, N.Nom_niveau
                                                     FROM utilisateurs U
                                                     JOIN etudiant E ON U.ID_utilisateur = E.ID_utilisateur
                                                     JOIN filieres F ON E.ID_filiere = F.ID_filiere
@@ -102,7 +101,13 @@
                     foreach($etudiants as $etudiant){
 
                         ?>
-                        <option  value="<?php echo $etudiant['ID_etudiant'] ?>"><?php echo  strtoupper($etudiant['Nom']) . ' ' .  ucwords($etudiant['Prenom'] )?></option>
+                            <option  value="<?php echo $etudiant['ID_etudiant'] ?>">
+                                <?php 
+                                    echo strtoupper($etudiant['Nom']) . ' ' . ucwords($etudiant['Prenom']) . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp' .
+                                    $etudiant['Nom_filiere'] . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' .
+                                    $etudiant['Nom_niveau'] 
+                                ?>
+                            </option>
                         <?php
                     }
                     ?>
