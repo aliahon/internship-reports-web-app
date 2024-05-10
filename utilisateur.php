@@ -47,7 +47,7 @@
                     <table class="table table-bordered myTable" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID_utilisateur</th>
+                                <th>ID utilisateur</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -57,7 +57,7 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>ID_utilisateur</th>
+                                <th>ID utilisateur</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -105,7 +105,7 @@
                     <table class="table table-bordered myTable" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID_chef_departement</th>
+                                <th>ID_chef departement</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -116,7 +116,7 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>ID_chef_departement</th>
+                                <th>ID_chef departement</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -165,7 +165,7 @@
                     <table class="table table-bordered myTable" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID_secretaire_departement</th>
+                                <th>ID_secretaire departement</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -176,7 +176,7 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>ID_secretaire_departement</th>
+                                <th>ID_secretaire departement</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -225,7 +225,7 @@
                     <table class="table table-bordered myTable" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>ID_etudiant</th>
+                                <th>ID etudiant</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>
@@ -237,7 +237,7 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>ID_etudiant</th>
+                                <th>ID etudiant</th>
                                 <th>Nom</th>
                                 <th>Prenom</th>
                                 <th>Email</th>

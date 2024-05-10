@@ -9,7 +9,7 @@ if($role == 1){
 
 <nav class="navbar  navbar-expand-lg  bg-primary sticky-top" data-bs-theme="dark" style="z-index:1;">
   <div class="container-fluid justify-content-center">
-    <a class="navbar-brand" href="#">RStageENSAA</a>
+    <a class="navbar-brand" href="#">StageENSAA</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

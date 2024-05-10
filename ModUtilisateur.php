@@ -203,7 +203,7 @@
                             //Update if the old role is the same as the new one
                             switch ($ID_role){
                                 case 2 : 
-                                    $ID_filiere = $_POST['ID_filiere'];
+                                    $ID_filiere = $_SESSION['utilisateur']['ID_filiere'];
                                     $sqlState = $pdo -> prepare('UPDATE chefs_departement 
                                                                 SET ID_filiere = ?
                                                                 WHERE ID_utilisateur = ?');
@@ -211,7 +211,7 @@
                                     break;
             
                                 case 3 : 
-                                    $ID_filiere = $_POST['ID_filiere'];
+                                    $ID_filiere = $_SESSION['utilisateur']['ID_filiere'];
                                     $sqlState = $pdo -> prepare('UPDATE secretaires_departement
                                                                 SET ID_filiere = ?
                                                                 WHERE ID_utilisateur = ?');
@@ -219,8 +219,8 @@
                                     break;
                                         
                                 case 4 : 
-                                    $ID_filiere = $_POST['ID_filiere'];
-                                    $ID_niveau = $_POST['ID_niveau'];
+                                    $ID_filiere = $_SESSION['utilisateur']['ID_filiere'];
+                                    $ID_niveau = $_SESSION['utilisateur']['ID_niveau'];
                                     $sqlState = $pdo -> prepare('UPDATE utilisateurs 
                                                                 SET ID_filiere = ?, ID_niveau = ?
                                                                 WHERE ID_utilisateur = ?');
@@ -271,14 +271,14 @@
                 <label for="validationCustom02" class="form-label">Prénom</label>
                 <input type="text" class="form-control" id="validationCustom02" name="Prenom" value="<?php echo $utilisateur[0]['Prenom']; ?>" required>
                 <div class="valid-feedback">
-                Looks good!
+                    Looks good!
                 </div>
             </div>
             <div class="col-md-5">
                 <label for="validationCustom03" class="form-label">Email</label>
                 <input type="email" class="form-control" id="validationCustom03" name="Email" value="<?php echo $utilisateur[0]['Email']; ?>" required>
                 <div class="invalid-feedback">
-                Please provide a valid Email.
+                    Please provide a valid Email.
                 </div>
             </div>
             <div class="col-md-3">

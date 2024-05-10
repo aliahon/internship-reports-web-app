@@ -1,4 +1,4 @@
-<div class="col-md-3" >
+<div class="col-md-6" >
     <label for="validationCustom06" class="form-label">Filière</label>
     <select class="form-select" id="validationCustom06" name="ID_filiere" required>
         <?php

@@ -102,20 +102,21 @@
                     );
                     $id = $_SESSION['utilisateur']['ID_utilisateur'];
                     $tableName = $table[$idRole ];
-                    $filiere = $pdo->query("SELECT F.ID_filiere, F.Nom_filiere
+                    $filiere = $pdo->query("SELECT F.ID_filiere
                                               FROM utilisateurs U
                                               JOIN $tableName T ON U.ID_utilisateur = T.ID_utilisateur
                                               JOIN filieres F ON T.ID_filiere = F.ID_filiere
                                               WHERE U.ID_utilisateur= $id;")->fetch();
                     $idFiliere=$filiere['ID_filiere'];
-                    $rapports = $pdo -> query(" SELECT RS.ID_rapport, RS.Titre_rapport, RS.Description_rapport, RS.Date_depot, RS.Chemin_fichier
+                    $rapports = $pdo -> query(" SELECT DISTINCT RS.ID_rapport, RS.Titre_rapport, RS.Description_rapport, RS.Date_depot, RS.Chemin_fichier
                                                 FROM rapports_stage RS
                                                 JOIN rapports_etudiants RE ON RS.ID_rapport = RE.ID_rapport
                                                 JOIN etudiant E ON RE.ID_etudiant = E.ID_etudiant
                                                 JOIN filieres F ON F.ID_filiere = E.ID_filiere
                                                 WHERE E.ID_filiere=$idFiliere")->fetchAll(PDO::FETCH_ASSOC);
                 }
-                    foreach($rapports as $rapport){
+
+                foreach($rapports as $rapport){
                 ?>
 
             <div class="col">
@@ -139,14 +140,12 @@
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $rapport['Titre_rapport']?></h5>
                         <p class="card-text"><?php echo $rapport['Description_rapport']?></p>
-
                     </div>
                     <?php if($idRole!=4){ ?>
                         <h6 class="m-0 font-weight-bold text-primary" style="padding: 10px;">Réaliser par:</h6>
                         <?php    
                         foreach($etudiants as $etudiant){
                                 ?>
-                                
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="toggleCollapse(this)"><?php echo strtoupper($etudiant['Nom'] ). " " . ucwords($etudiant['Prenom']); ?></li>
                                         <div class="collapse collapseExample">

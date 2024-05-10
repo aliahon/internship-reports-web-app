@@ -18,37 +18,35 @@
     require_once 'include/database.php';
     $id = $_GET['id']; 
 
-    $sqlState = $pdo->prepare('SELECT *
+    $sqlState = $pdo->prepare('SELECT ID_rapport, Titre_rapport, Description_rapport, Date_depot, Chemin_fichier
                               FROM rapports_stage
                               WHERE ID_rapport=?;');
     $sqlState -> execute([$id]);
     $rapport = $sqlState ->fetchAll(PDO::FETCH_ASSOC);
+    var_dump($rapport);
 
-    $sqlStat = $pdo->prepare('SELECT U.ID_utilisateur, U.Nom, U.Prenom, U.Email,U.Mdp, U.ID_role, R.Nom_role
-                              FROM etudiant E
-                              JOIN rapport R ON U.ID_role = R.ID_role
-                              WHERE U.ID_utilisateur=?;');
+    $sqlStat = $pdo->prepare('SELECT ID_etudiant
+                              FROM rapports_etudiants 
+                              WHERE ID_rapport=?;');
     $sqlStat -> execute([$id]);
-    $etudiant = $sqlStat ->fetchAll(PDO::FETCH_ASSOC);
+    $contriEtudiant = $sqlStat ->fetchAll(PDO::FETCH_ASSOC);
     // Check if the form was submitted
     if (isset($_POST['Modifier'])) {
 
         // Retrieve form data
-        $rapportId = $_POST['rapportId'];
         $titre = $_POST['titre'];
         $description = $_POST['description'];
         $fichier = $_FILES['fichier'];
-    
-        // Handle uploaded file
-        $uploadDir = 'uploads/'; // Directory to store files
-        $uploadFile = $uploadDir . basename($fichier['name']); // Full path of the uploaded file
+
+        $uploadDir = 'uploads/'; // Répertoire de stockage des fichiers
+        $uploadFile = $uploadDir . basename($fichier['name']); // Chemin complet du fichier uploadé
 
         // Move the uploaded file to the destination directory
         if (move_uploaded_file($fichier['tmp_name'], $uploadFile)) {
             // Update data in the rapports_stage table
             $sql = "UPDATE rapports_stage SET Titre_rapport = ?, Description_rapport = ?, Chemin_fichier = ? WHERE ID_rapport = ?";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([$titre, $description, $uploadFile, $rapportId]);
+            $stmt->execute([$titre, $description, $uploadFile, $id]);
 
             echo '<div class="alert alert-success" role="alert">Le rapport a été modifié avec succès!</div>';
         } else {
@@ -64,25 +62,48 @@
                 </div>
             </form>
         </div>
-        <form action="modifyRapport.php" method="POST" enctype="multipart/form-data">
-            <!-- Hidden input field to store the rapport ID -->
-            <input type="hidden" name="rapportId" value="<?php echo $rapportId; ?>">
+        <form  method="POST" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="titre" class="form-label">Titre du rapport</label>
-                <input type="text" class="form-control" id="titre" name="titre" value="<?php echo $titre; ?>" required>
+                <input type="text" class="form-control" id="titre" name="titre" value="<?php echo $rapport[0]['Titre_rapport']; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Description du rapport</label>
-                <textarea class="form-control" id="description" name="description" required><?php echo $description; ?></textarea>
+                <textarea class="form-control" id="description" name="description" required><?php echo $rapport[0]['Description_rapport']; ?></textarea>
             </div>
             <div class="mb-3">
                 <label for="fichier" class="form-label">Fichier du rapport</label>
-                <input type="file" class="form-control" id="fichier" name="fichier">
+                <input type="file" class="form-control" id="fichier" name="fichier" value="<?php echo $rapport[0]['Chemin_fichier']; ?>">
             </div>
-            <!-- Selection of students contributing to the report -->
-            <!-- Example: -->
             <div class="mb-3 d-grid gap-2 d-md-block">
-                <!-- Modify as needed -->
+                <div class="row align-items-center">
+                    <label for="etudiants" class="form-label col-md-4">Étudiants qui ont contribué au rapport</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <input id="myInput" type="text" placeholder="Entrez le nom de l'étudiant rechercher..." class="form-control rounded" aria-label="Search" aria-describedby="search-addon" style="margin-bottom: 10px;" />
+                            <span class="input-group-text border-0" id="search-addon" style="margin-bottom: 10px;">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <select id="select" multiple class="form-select" name="etudiants[]" required>
+                <?php
+                $etudiants = $pdo -> query('SELECT E.ID_etudiant, U.Nom, U.Prenom, F.Nom_filiere, N.Nom_niveau
+                                                    FROM utilisateurs U
+                                                    JOIN etudiant E ON U.ID_utilisateur = E.ID_utilisateur
+                                                    JOIN filieres F ON E.ID_filiere = F.ID_filiere
+                                                    JOIN niveaux N ON E.ID_niveau = N.ID_niveau
+                                                    ORDER BY E.ID_filiere;')->fetchAll(PDO::FETCH_ASSOC);
+
+                    foreach($etudiants as $etudiant){
+                        $isSelected = in_array($etudiant['ID_etudiant'], array_column($contriEtudiant, 'ID_etudiant'));
+                        ?>
+                        <option value="<?php echo $etudiant['ID_etudiant']; ?>" <?php echo $isSelected ? 'selected' : ''; ?>>
+                            <?php echo strtoupper($etudiant['Nom']) . ' ' . ucwords($etudiant['Prenom']) . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $etudiant['Nom_filiere'] . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $etudiant['Nom_niveau']; ?>
+                        </option>
+                    <?php } ?>
+                </select>
             </div>
             <div class="col-12">
             <button class="btn btn-primary" type="submit" name="Modifier">Modifier le rapport</button>
@@ -93,7 +114,12 @@
 
     <script>
         $(document).ready(function(){
-        // Add any client-side script if needed
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#select option").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
         });
     </script>
 </body>

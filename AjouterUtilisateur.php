@@ -28,9 +28,9 @@
                     //ajouter aux autre tableaux selon le role d'utilisateur
                     $sqlStat = $pdo -> prepare('SELECT * FROM utilisateurs WHERE Email = ? AND Mdp = ?');
                     $sqlStat -> execute([$Email, $mdp]);
-                    $utilisateur=$sqlStat -> fetch();
-                    $role = $utilisateur['ID_role'];
-                    $id = $utilisateur['ID_utilisateur'];
+                    $utilisateur=$sqlStat->fetchAll(PDO::FETCH_ASSOC);
+                    $role = $utilisateur[0]['ID_role'];
+                    $id = $utilisateur[0]['ID_utilisateur'];
                     switch ($role){
                         case 2 : 
                             $ID_filiere = $_POST['ID_filiere'];
@@ -132,7 +132,7 @@
             </div>
             <div class="col-md-5">
                 <label for="validationCustom03" class="form-label">Email</label>
-                <input type="email" class="form-control" id="validationCustom03" name="Email" required>
+                <input type="email" class="form-control" id="validationCustom03" name="Email" placeholder="ex: nom.prenom@edu.uiz.ac.ma" required>
                 <div class="invalid-feedback">
                 Please provide a valid Email.
                 </div>
