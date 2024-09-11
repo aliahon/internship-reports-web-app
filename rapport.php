@@ -71,9 +71,13 @@
     ?>
     <div class="container" style=" padding : 5% 0%" >
         <div class="row align-items-center">
+        <?php 
+            if($idRole == 1 || $idRole == 4 ){
+        ?>
             <div class="col-md-6">
                 <span style="font-size:30px;cursor:pointer" onclick="openNav()"><i class="fa-solid fa-filter"></i>      Filtre</span>
             </div>
+        <?php } ?>
             <div class="col-md-6">
                 <form class="input-group rounded" style="margin-bottom: 10px;">
                     <input id="myInput" type="text" placeholder="Search.." class="form-control rounded" aria-label="Search" aria-describedby="search-addon" />
