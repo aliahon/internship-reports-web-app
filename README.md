@@ -1,10 +1,12 @@
-# Internship Report Management System
+# Application de Gestion des Rapports de Stage
 
-Welcome to the Internship Report Management System! Our platform simplifies the management of digitized internship reports for student projects. It provides an easy-to-use solution for accessing and uploading reports, making it convenient for both students and administrators.
+Bienvenue dans l'Application de Gestion des Rapports de Stage ! Notre plateforme simplifie la gestion des rapports de stage numérisés des étudiants chez Ensa Agadir. Elle propose une solution facile à utiliser pour accéder aux rapports et les télécharger, ce qui est pratique pour les étudiants comme pour les administrateurs.
 
-![overview](image.png)
+![overview](img/image.png)
+![alt text](img/2.png)
+![alt text](img/3.png)
 
-## Features
+## Fonctionnalités
 
-- **For Students**: Search and download reports by department, year, or keyword.
-- **For Administrators**: Upload, modify, and delete reports, ensuring smooth management.
+- **Pour les étudiants**: Rechercher et télécharger des rapports par département, année ou mot-clé.
+- **Pour les administrateurs**: Télécharger, modifier et supprimer des rapports pour une gestion efficace.
